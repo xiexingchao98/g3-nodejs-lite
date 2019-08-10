@@ -36,13 +36,13 @@ exports.model = {
   },
   mysql: {
     handle: mysql,
-    database: 'g3',
+    database: 'g3',    // 数据库名字
     prefix: '',
     encoding: 'utf8',
-    host: '120.78.163.56',
+    host: '127.0.0.1',    // 数据库地址
     port: '3306',
-    user: 'root',
-    password: 'Passw0rd!',
+    user: 'your user name',    // 用户名
+    password: 'your password',    // 密码
     dateStrings: true
   }
 };
