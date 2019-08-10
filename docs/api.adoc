@@ -1,0 +1,460 @@
+= g3 API
+:toc: left
+:toc-title: 目录
+:toclevels: 5
+
+所有 API 地址均以服务端默认地址开头。
+
+例如，本地部署服务器地址：`http://localhost:8360` 。
+
+== 商品
+
+=== 首页推荐
+
+默认返回 20 条记录
+
+....
+GET /recommend
+....
+
+返回结果 `JSON Array`
+
+....
+[
+    {
+        "commodity_id": 1,
+        "commodity_name": "悦诗风吟 悦诗风吟新绿茶精萃保湿平衡水乳套装",
+        "commodity_price": 184,
+        "commodity_cover": "http://p4.jmstatic.com/product/004/925/4925504_std/4925504_350_350.jpg"
+    }
+]
+....
+
+
+=== 商品详情
+
+....
+GET /commodity/detail?id={commodity_id}
+....
+
+返回结果 `JSON Obj`
+
+....
+{
+    "commodity_id": 1,
+    "commodity_name": "悦诗风吟 悦诗风吟新绿茶精萃保湿平衡水乳套装",
+    "commodity_price": 184,
+    "commodity_cover": "http://p4.jmstatic.com/product/004/925/4925504_std/4925504_350_350.jpg",
+    "commodity_tag": [
+        {
+            "tag_id": 6,
+            "tag_name": "去皱"
+        }
+    ],
+    "category_id": 3
+}
+....
+
+=== 本周新品
+
+....
+GET /commodity/latest
+....
+
+返回结果 `JSON Array`
+
+[source, json]
+----
+[
+    {
+        "commodity_id": 196,
+        "commodity_name": "【韩国版】兰芝水酷保湿面霜50ml",
+        "commodity_price": 9.9,
+        "commodity_cover": "http://p3.jmstatic.com/product/000/984/984568_std/984568_350_350.jpg",
+        "commodity_tag": "[{\"tag_id\": 1, \"tag_name\": \"保湿\"}, {\"tag_id\": 3, \"tag_name\": \"补水\"}, {\"tag_id\": 4, \"tag_name\": \"滋润\"}]",
+        "commodity_sku": "702030674",
+        "commodity_origin_country": "韩国（具体产地以收到实物为准）",
+        "commodity_note": "因个人肤质不同，如有不适请立即停止使用。",
+        "commodity_special_note": "多款包装随机发！请放心购买！",
+        "commodity_hot": 0,
+        "commodity_weight": 0,
+        "commodity_create_time": "2019-08-05 08:14:10",
+        "commodity_brand_id": 23,
+        "commodity_category_id": 3
+    }
+]
+----
+
+=== 热门商品
+
+....
+GET /commodity/hot
+....
+
+返回结果 `JSON Array`
+
+[source, json]
+----
+[
+    {
+        "commodity_id": 1,
+        "commodity_name": "QUALITY FIRST保湿面膜50片/袋",
+        "commodity_price": 9.9,
+        "commodity_cover": "http://p4.jmstatic.com/product/000/818/818484_std/818484_350_350.jpg",
+        "commodity_tag": "[{\"tag_id\": 1, \"tag_name\": \"保湿\"}, {\"tag_id\": 2, \"tag_name\": \"美白\"}, {\"tag_id\": 3, \"tag_name\": \"补水\"}]",
+        "commodity_sku": "702003318",
+        "commodity_origin_country": "日本（具体产地以收到产品为准）",
+        "commodity_note": "因个人肤质不同，如有不适请立即停止使用。",
+        "commodity_special_note": "",
+        "commodity_hot": 0,
+        "commodity_weight": 0,
+        "commodity_create_time": "2019-08-05 08:13:33",
+        "commodity_brand_id": 1,
+        "commodity_category_id": 1
+    },
+    {
+        "commodity_id": 2,
+        "commodity_name": "AHCB5玻尿酸水乳套装120ml+120ml",
+        "commodity_price": 9.9,
+        "commodity_cover": "http://p0.jmstatic.com/product/004/909/4909470_std/4909470_350_350.jpg",
+        "commodity_tag": "[{\"tag_id\": 1, \"tag_name\": \"保湿\"}, {\"tag_id\": 3, \"tag_name\": \"补水\"}]",
+        "commodity_sku": "702027514",
+        "commodity_origin_country": "韩国（具体产地以收到实物为准）",
+        "commodity_note": "因个人肤质不同，如有不适请立即停止使用。",
+        "commodity_special_note": "多款包装随机发货，介意者慎购！",
+        "commodity_hot": 0,
+        "commodity_weight": 0,
+        "commodity_create_time": "2019-08-05 08:13:34",
+        "commodity_brand_id": 2,
+        "commodity_category_id": 2
+    }
+]
+----
+
+=== 商品搜索
+
+....
+GET /commodity/search?keyword={keyword}
+....
+
+返回结果 `JSON Array`
+
+....
+[
+    {
+        "commodity_id": 5,
+        "commodity_name": "美迪惠尔保湿面膜贴25ml*20片",
+        "commodity_price": 9.9,
+        "commodity_cover": "http://p3.jmstatic.com/product/002/119/2119208_std/2119208_350_350.jpg",
+        "commodity_tag": "[{\"tag_id\": 1, \"tag_name\": \"保湿\"}, {\"tag_id\": 3, \"tag_name\": \"补水\"}, {\"tag_id\": 4, \"tag_name\": \"滋润\"}]",
+        "commodity_sku": "702021952",
+        "commodity_origin_country": "韩国（具体产地以收到实物为准）",
+        "commodity_note": "因个人肤质不同，如有不适请立即停止使用。",
+        "commodity_special_note": "",
+        "commodity_hot": 0,
+        "commodity_weight": 0,
+        "commodity_create_time": "2019-08-05 08:13:34",
+        "commodity_brand_id": 4,
+        "commodity_category_id": 1
+    }
+]
+....
+
+== 分类
+
+=== 分类列表
+
+....
+GET /category
+....
+
+返回结果 `JSON Array`
+
+....
+[
+    {
+        "category_id": 1,
+        "category_name": "乳液"
+    },
+    {
+        "category_id": 2,
+        "category_name": "面膜"
+    },
+    {
+        "category_id": 3,
+        "category_name": "洁面"
+    }
+]
+....
+
+=== 分类下的商品
+
+....
+GET /commodity/viewByCategory?id={category_id}
+....
+
+返回结果 `JSON Array`
+
+....
+[
+    {
+        "commodity_id": 9,
+        "commodity_name": "AHC 高浓缩B5玻尿酸面霜50ml",
+        "commodity_price": 179,
+        "commodity_cover": "http://p2.jmstatic.com/product/002/742/2742717_std/2742717_350_350.jpg",
+        "commodity_tag": "[{\"tag_id\": 1, \"tag_name\": \"保湿\"}]",
+        "category_id": 1
+    },
+    {
+        "commodity_id": 10,
+        "commodity_name": "【重现柔滑亮白美肌】雪花秀玉容撕拉面膜中样50ml",
+        "commodity_price": 55,
+        "commodity_cover": "http://p2.jmstatic.com/product/003/359/3359262_std/3359262_350_350.jpg",
+        "commodity_tag": "[{\"tag_id\": 2, \"tag_name\": \"补水\"}]",
+        "category_id": 1
+    }
+]
+....
+
+== 帖子
+
+=== 近期帖子
+
+....
+GET /post
+....
+
+返回结果 `JSON Array`
+
+....
+[
+    {
+        "post_id": 3,
+        "post_title": "黄柠檬",
+        "last_comment_time": "2019-07-30 22:00:21",
+        "create_time": "2019-07-30 22:00:21",
+        "post_comment_count": 1,
+        "post_owner_name": "white lie"
+    },
+    {
+        "post_id": 2,
+        "post_title": "Jggj",
+        "last_comment_time": "2019-07-30 22:00:16",
+        "create_time": "2019-07-30 22:00:16",
+        "post_comment_count": 1,
+        "post_owner_name": "●尘埃落定●(๑• . •๑)"
+    }
+]
+....
+
+=== 帖子详情
+
+....
+GET /post/viewDetail?id={post_id}
+....
+
+返回结果
+
+....
+{
+    "post_id": 1,
+    "post_title": "社区上线",
+    "post_content": "社区系统今天上线啦",
+    "topic_id": null,
+    "last_comment_time": "2019-07-30 16:26:20",
+    "create_time": "2019-07-30 16:26:20",
+    "post_owner_id": 1
+}
+....
+
+=== 评论帖子
+
+....
+POST /post/doComment
+....
+
+|===
+| 参数名 | 类型 | 含义
+
+| storage
+| String
+| 用户身份信息（参阅登录接口的返回结果）
+
+| data
+| Object
+| 评论的数据
+|===
+
+`data` 格式
+
+|===
+| 参数名 | 类型 | 含义
+
+| post_id
+| number
+| 帖子ID
+
+| comment_content
+| String
+| 评论内容
+
+|===
+
+=== 发布帖子
+
+....
+POST /post/new
+....
+
+|===
+| 参数名 | 类型 | 含义
+
+| storage | String | 用户身份信息（参阅登录接口的返回结果）
+
+| data | Object | 帖子数据
+|===
+
+`data` 格式
+
+|===
+| 参数名 | 类型 | 含义
+
+| post_title | String | 标题
+| post_content | String | 内容
+|===
+
+=== 帖子搜索
+
+....
+GET /post/search?keyword={keyword}
+....
+
+返回结果 `JSON Array`
+
+[source, json]
+----
+[
+    {
+        "post_id": 14,
+        "post_title": "护肤步骤",
+        "post_content": "1.洁面\n2.爽肤水（二次清洁，打开毛孔）\n3.精华液（补充营养）\n4.护肤水（补水）\n5.护肤乳（缩水补水）\n6.面霜（锁水）\n\n\n\n\n\n\n\n",
+        "topic_id": null,
+        "last_comment_time": "2019-08-03 19:48:55",
+        "create_time": "2019-08-03 19:48:55",
+        "post_owner_id": 4
+    }
+]
+----
+
+== 品牌
+
+=== 品牌列表
+
+....
+GET /brand
+....
+
+返回结果 `JSON Array`
+
+[source, json]
+----
+[
+    {
+        "brand_id": 1,
+        "brand_name": "QUALITY FIRST"
+    },
+    {
+        "brand_id": 2,
+        "brand_name": "AHC"
+    },
+    {
+        "brand_id": 3,
+        "brand_name": "美蒂菲(MEDI-PEEL)"
+    },
+    {
+        "brand_id": 4,
+        "brand_name": "美迪惠尔（MEDIHEAL）"
+    }
+]
+----
+
+=== 品牌下的商品
+
+....
+GET /commodity/viewByBrandId?brandId={brandId}
+....
+
+返回结果 `JSON Array`
+
+[source, json]
+----
+[
+    {
+        "commodity_id": 2,
+        "commodity_name": "AHCB5玻尿酸水乳套装120ml+120ml",
+        "commodity_price": 9.9,
+        "commodity_cover": "http://p0.jmstatic.com/product/004/909/4909470_std/4909470_350_350.jpg",
+        "commodity_tag": "[{\"tag_id\": 1, \"tag_name\": \"保湿\"}, {\"tag_id\": 3, \"tag_name\": \"补水\"}]",
+        "commodity_sku": "702027514",
+        "commodity_origin_country": "韩国（具体产地以收到实物为准）",
+        "commodity_note": "因个人肤质不同，如有不适请立即停止使用。",
+        "commodity_special_note": "多款包装随机发货，介意者慎购！",
+        "commodity_hot": 0,
+        "commodity_weight": 0,
+        "commodity_create_time": "2019-08-05 08:13:34",
+        "commodity_brand_id": 2,
+        "commodity_category_id": 2
+    },
+    {
+        "commodity_id": 3,
+        "commodity_name": "AHC B5玻尿酸保湿滋润面霜50ml",
+        "commodity_price": 9.9,
+        "commodity_cover": "http://p0.jmstatic.com/product/004/906/4906970_std/4906970_350_350.jpg",
+        "commodity_tag": "[{\"tag_id\": 1, \"tag_name\": \"保湿\"}]",
+        "commodity_sku": "7011224851",
+        "commodity_origin_country": null,
+        "commodity_note": "因个人肤质不同，如有不适请立即停止使用。",
+        "commodity_special_note": "因个人肤质不同，如有不适请立即停止使用！",
+        "commodity_hot": 0,
+        "commodity_weight": 0,
+        "commodity_create_time": "2019-08-05 08:13:34",
+        "commodity_brand_id": 2,
+        "commodity_category_id": 3
+    }
+]
+----
+
+== 登录
+
+....
+POST /oauth/login/weixin
+....
+
+|===
+| 参数名 | 类型 | 含义
+
+| code | String | wx.login 中获取的用户登录凭证
+| userInfo | Object | wx.getUsrInfo 获取的用户信息
+
+|===
+
+返回类型 `JSON Object`
+
+....
+{
+    "errno": 0,
+    "errmsg": "登录成功",
+    "data": "xxxxxxxxxxxxxxxxx"
+}
+....
+
+|===
+| 参数名 | 类型 | 含义
+
+| data | String | 加密后的用户身份信息
+|===
+
+[TIP]
+====
+获得此信息后，请妥善保存，请求时将此信息填入 `storage` 字段，以供服务端识别用户信息。一般是存入客户端本地存储中，下次请求时再取出。
+====

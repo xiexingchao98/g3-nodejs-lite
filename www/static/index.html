@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .left {
+      text-align: left;
+    }
+    .right {
+      text-align: right;
+    }
+    .record {
+      margin: 12px 0;
+      padding: 20px;
+      background: #ccc;
+    }    
+    .id {
+      font-family: 'Arial';
+    }
+    .content {
+      padding: 20px;
+      background: #efefef;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="chat-record"></div>
+  <div class="menu-bar">
+    <span class="userid"></span>
+    <input type="text" name='nickname' placeholder="输入你的昵称" value='Unknow'>
+    <input type="text" name='content' placeholder='请输入消息'>
+    <button class="send">发送</button>
+    <button class="close">关闭连接</button>
+  </div>
+  <script>
+    var ws = new WebSocket('wss:localhost:8360/ws')
+    var userid = genId()
+    document.querySelector('.userid').textContent = "ID: " + userid
+    var chat = document.querySelector('.chat-record')
+    ws.onmessage = function (e) {
+      // debug
+      console.log(e)
+
+      // 接收并转换数据格式
+      let res = JSON.parse(e.data)
+      
+      // 创建dom元素
+      let record = document.createElement('div')
+      let userinfo = document.createElement('div')
+      let nickname = document.createElement('span')
+      let id = document.createElement('span')
+      let content = document.createElement('div')
+      let date = document.createElement('div')
+      
+      nickname.textContent = res.data.nickname
+      id.classList.add('id')
+      id.textContent = "<ID:" + res.data.id + ">"
+      content.classList.add('content')
+      content.textContent =  res.data.content
+      date.textContent = new Date(res.data.date)
+
+      userinfo.appendChild(nickname)
+      userinfo.appendChild(id)
+
+      record.appendChild(userinfo)
+      record.appendChild(content)
+      record.appendChild(date)
+
+      if (res.data.id == userid)
+        record.classList.add('right')
+      else
+        record.classList.add('left')
+        
+      record.classList.add('record')
+      chat.appendChild(record)
+    }
+    // 事件绑定
+    document.querySelector('.send').onclick = function () {
+      // 获取表单数据
+      let nickname = document.querySelector("input[name='nickname']").value
+      let content = document.querySelector("input[name='content']").value
+      ws.send(JSON.stringify({
+        event: 'message',
+        data: {
+          id: userid,
+          nickname: nickname,
+          content: content,
+          date: Date.now()
+        }
+      })
+      )
+    }
+    document.querySelector('.close').onclick = function () {
+      ws.close()
+    }
+    // id 生成器
+    function genId() {
+      return Math.floor(Math.random() * 10000000)
+    }
+  </script>
+</body>
+
+</html>

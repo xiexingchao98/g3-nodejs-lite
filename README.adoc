@@ -1,0 +1,95 @@
+= g3-nodejs-lite
+
+== 介绍
+
+基于 ThinkJS 框架实现的美妆商城后端（简易版）。
+
+数据库使用 MySQL 5.7 。
+
+支持功能：
+
+* 商品数据的基本操作（新品、热门、搜索、详情、基本分类、品牌）
+
+* 微信 OAuth 登录
+
+* 社区发帖、回帖、搜索、消息通知
+
+== 使用
+
+=== 服务端部署
+
+==== 初始化数据库
+
+1. 安装 MySQL 5.7 版本 (其他版本不保证兼容性)
+
+2. 创建数据库
+
+3. 执行 SQL 脚本
+
+Navicat 连接到 Server 后，连接到指定数据库，在数据库上右键选择【运行 SQL 脚本】，选择项目根目录下的 `g3.sql` 文件即可。
+
+==== 创建后端服务
+
+克隆仓库
+
+  git clone https://github.com/xiexingchao98/g3-nodejs.git
+
+更改数据库配置
+
+.src/config/adapter.js
+[source, js]
+----
+exports.model = {
+  type: 'mysql',
+  common: {
+    logConnect: isDev,
+    logSql: isDev,
+    logger: msg => think.logger.info(msg)
+  },
+  mysql: {
+    handle: mysql,
+    database: 'g3',    // 数据库名
+    prefix: '',
+    encoding: 'utf8',
+    host: '127.0.0.1',    // 数据库地址
+    port: '3306',
+    user: 'your user name',    // 用户名
+    password: 'your password',    // 密码
+    dateStrings: true
+  }
+};
+----
+
+配置 OAuth 信息
+
+添加环境变量 `weixin_appid` 和 `weixin_secret` ，分别设置为小程序 `appid` 和 `secret` 的值即可。
+
+或者更改 `login.js` 文件中的 `url` 地址，将 `${process.env['weixin_appid']}` 和 `${process.env['weixin_secret']}` 替换成小程序 `appid` 和 `secret` 即可。
+
+.src/controller/oauth/login.js
+[source, js]
+----
+let options = {
+  method: 'GET',
+  url: `https://api.weixin.qq.com/sns/jscode2session?appid=${process.env['weixin_appid']}&secret=${process.env['weixin_secret']}&js_code=${code}&grant_type=authorization_code`,
+  json: true
+}
+----
+
+
+安装依赖
+
+  npm i
+
+启动
+
+  npm start
+
+[NOTE]
+====
+如果是远程服务器，请确保开启了 8360 端口
+====
+
+=== 客户端调用
+
+请参阅 link:./docs/api.adoc[API 文档]
